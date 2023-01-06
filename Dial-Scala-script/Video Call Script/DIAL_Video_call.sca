@@ -1,0 +1,23 @@
+﻿!ScalaScript1107
+// Saved by Scala Designer Release 11.08.00 at 2022-11-23 16:59:54
+:"DIAL_Video_call.sca"
+{
+  Group:
+    External Boolean(Channel.activateVideoCall, Channel.videocallDefaultPage);
+    Template FileNameString(dialVideoCallWidget("DIAL_Video_call\dialvideocall.wgt", Ident(Default, "Select DIAL Video Call Widget File", "")));
+    Template String(videoCallURL("https://10.10.2.61:3000/main", Required(On), Ident(Default, "Enter video call url", "")));
+    Template Integer(videoCallWaitingTime(30, Required(On), Presentation(Numeric(Min(On, 30))), Ident(Default, "Enter video call waiting time in seconds", "")));
+    BackgroundSettings(Size(1920, 1080));
+    Config.RecentPublishLocations(PublishLocation("10.10.2.12 ContentManager", "DIAL_Video_call"));
+  Sequence:
+    :"Main Page"
+    {
+      Group:
+        Channel.videocallDefaultPage = Off;
+        Display(Wipe("Dissolve", Duration(500), Direction(90), Wait(Off)), Backdrop(State(Off)), UserPalette(RGBPen(1, $ffffff, $ffff7f, $0, $969696, $646464, $c8c8c8, $6b120d), RGBPen(18, $969696, $c8c8c8), RGBPen(11, $ffff7f), RGBPen(10, $ff9c00), RGBPen(17, $646464), RGBPen(8, $ffee00, $bbbbbb), RGBPen(12, $777777, $dddddd, $555555)), Thumbnail(On), Section("Template Properties", Variables(dialVideoCallWidget, videoCallURL, videoCallWaitingTime)));
+      Sequence:
+        WebClip(0, 0, "", Wipe("Dissolve", Duration(500), Direction(90), Wait(Off)), Transparent(Off), OnReplay(Replace), Operation(On), WidgetFile(dialVideoCallWidget), RenderSize(1920, 1080), CMode(transparent));
+        Input(Mouse(Off), TouchScreen(On), Keyboard(Off), MouseControls(Off), KeyboardControls(Off), PointerSelectionOnly(Off), UsePointerBlanking(Off));
+        Wait();
+    }
+}

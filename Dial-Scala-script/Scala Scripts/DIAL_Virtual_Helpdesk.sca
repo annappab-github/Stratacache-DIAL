@@ -1,0 +1,42 @@
+﻿!ScalaScript1107
+// Saved by Scala Designer Release 11.08.00 at 2022-11-30 11:29:37
+:"DIAL_Virtual_Helpdesk.sca"
+{
+  Group:
+    External Boolean(Channel.defaultPage, Channel.explorePage, Channel.exploreRetailPage, Channel.exploreFandBPage, Channel.activateVideoCall, Channel.videocallDefaultPage);
+    String(formDataToSave, excelfile, galleryJSON, eventJSON, triggerAlert, scanQRImgABSPath);
+    Integer(serviceType);
+    Template FileNameString(dialWidget("DIAL_Virtual_Helpdesk\dial.wgt", Ident(Default, "Select DIAL Widget File", "")), scanQRImage("DIAL_Virtual_Helpdesk\Shop_n_Dine.png", Ident(Default, "Select the Scan QR Image", "")));
+    Template String(xmlURL("D:\GitHub\dialXML\DIAL_Flightfeed.xml", Ident(Default, "Enter Flight XML path", "")), MobilePath_URL("http://10.10.2.73:8081", Ident(Default, "Enter mobile app URL", "")), smtpHost("", Ident(Default, "Enter SMTP host", "")), senderEmail("", Ident(Default, "Enter sender email", "")), username("", Ident(Default, "Enter SMTP username", "")), password("", Ident(Default, "Enter SMTP Password", "")), medical_recepients_To("", Presentation(Text(4096, 4)), Ident(Default, "Enter comma separated recepients To email address", "user1@example.com,user2@example.com")), medical_recepients_Cc("", Presentation(Text(4096, 4)), Ident(Default, "Enter comma separated recepients Cc email address", "user1@example.com,user2@example.com")), medical_recepients_Bcc("", Presentation(Text(4096, 4)), Ident(Default, "Enter comma separated recepients Bcc email address", "user1@example.com,user2@example.com")), firefighter_recepients_To("", Presentation(Text(4096, 4)), Ident(Default, "Enter comma separated recepients To email address", "user1@example.com,user2@example.com")), firefighter_recepients_Cc("", Presentation(Text(4096, 4)), Ident(Default, "Enter comma separated recepients Cc email address", "user1@example.com,user2@example.com")), firefighter_recepients_Bcc("", Presentation(Text(4096, 4)), Ident(Default, "Enter comma separated recepients Bcc email address", "user1@example.com,user2@example.com")), security_recepients_To("", Presentation(Text(4096, 4)), Ident(Default, "Enter comma separated recepients To email address", "user1@example.com,user2@example.com")), security_recepients_Cc("", Presentation(Text(4096, 4)), Ident(Default, "Enter comma separated recepients Cc email address", "user1@example.com,user2@example.com")), security_recepients_Bcc("", Presentation(Text(4096, 4)), Ident(Default, "Enter comma separated recepients Bcc email address", "user1@example.com,user2@example.com")), videoCallURL("https://172.16.1.3:3000/main", Ident(Default, "Enter video call url", "")), weatherXMLUrl("assets/testabc_3.xml", Ident(Default, "Enter weather xml location", "")), sos_medical("9560799557", Ident(Default, "Enter contact details of Medical Services", "")), sos_firefighter("9560799556", Ident(Default, "Enter contact details of Firefighting & Rescue", "")), sos_security("9560799555", Ident(Default, "Enter contact details of Security Assistance", "")));
+    Template Integer(kioskId(114, Presentation(PickList(Value(114, Ident(Default, "Pre Checkin", "")), Value(115, Ident(Default, "Domestic Terminal", "")))), Ident(Default, "Select the kiosk location", "")), smtpPort(465, Ident(Default, "Enter SMTP port", "")), pageTimeoutInMin(1, Required(On), Presentation(Numeric(Min(On, 1))), Ident(Default, "Enter page timeout in minutes", "")), videoCallPageTimeoutInMin(1, Required(On), Presentation(Numeric(Min(On, 1))), Ident(Default, "Enter video call page timeout in minutes", "")));
+    BackgroundSettings(Size(3840, 1080));
+    Config.RecentPublishLocations(PublishLocation("10.10.2.12 ContentManager", "DIAL_Virtual_Helpdesk"), PublishLocation("10.10.2.12 ContentManager", "DIAL_Virtual_Helpdesk_POC"), PublishLocation("172.16.1.3 ContentManager", "DIAL_Virtual_Helpdesk_POC"), PublishLocation("10.10.2.12 ContentManager", "DIAL_Virtual_Helpdesk_Final"));
+    Section(1, "Video Call Properties", Variables(videoCallURL));
+    Section(2, "SMTP Properties", Variables(smtpHost, smtpPort, username, password, senderEmail));
+    Section(3, "Medical SOS Properties", Variables(sos_medical, medical_recepients_To, medical_recepients_Cc, medical_recepients_Bcc));
+    Section(4, "Fire Fighter SOS Properties", Variables(sos_firefighter, firefighter_recepients_To, firefighter_recepients_Cc, firefighter_recepients_Bcc));
+    Section(5, "Security SOS Properties", Variables(sos_security, security_recepients_To, security_recepients_Cc, security_recepients_Bcc));
+    Section(6, "Timeout Properties", Variables(pageTimeoutInMin, videoCallPageTimeoutInMin));
+  Sequence:
+    :"Init variables"
+    {
+      Sequence:
+        Channel.activateVideoCall = Off;
+        Channel.videocallDefaultPage = On;
+    }
+    :"Main Page"
+    {
+      Group:
+        Display(Wipe("Dissolve", Duration(500), Direction(90), Wait(Off)), Backdrop(State(Off)), UserPalette(RGBPen(1, $ffffff, $ffff7f, $0, $969696, $646464, $c8c8c8, $6b120d), RGBPen(18, $969696, $c8c8c8), RGBPen(11, $ffff7f), RGBPen(10, $ff9c00), RGBPen(17, $646464), RGBPen(8, $ffee00, $bbbbbb), RGBPen(12, $777777, $dddddd, $555555)), Thumbnail(On), Section("Template Properties", Variables(kioskId, dialWidget, xmlURL, MobilePath_URL, weatherXMLUrl, scanQRImage)));
+        WindowsScript("DIAL_Virtual_Helpdesk\helper.py", Engine("Python.AXScript.2"), ShareVariable(scanQRImage), ShareVariable(scanQRImgABSPath));
+        Input(Mouse(Off), TouchScreen(On), Keyboard(Off), MouseControls(Off), KeyboardControls(Off), PointerSelectionOnly(Off), UsePointerBlanking(Off));
+        WebClip(0, 0, "", OnReplay(Replace), Operation(On), WidgetFile(dialWidget), RenderSize(3840, 1080), CMode(transparent));
+        OnNotification(formDataToSave, Use("Save Form Data"));
+        OnNotification(triggerAlert, Use("Send Alert"));
+        Wait();
+    }
+    :"Save Form Data"
+    WindowsScript("DIAL_Virtual_Helpdesk\exportcsv.py", Engine("Python.AXScript.2"), ShareVariable(formDataToSave));
+    :"Send Alert"
+    WindowsScript("DIAL_Virtual_Helpdesk\sendemail.py", Engine("Python.AXScript.2"), ShareVariable(smtpHost), ShareVariable(smtpPort), ShareVariable(senderEmail), ShareVariable(username), ShareVariable(password), ShareVariable(medical_recepients_To), ShareVariable(medical_recepients_Cc), ShareVariable(medical_recepients_Bcc), ShareVariable(firefighter_recepients_To), ShareVariable(firefighter_recepients_Cc), ShareVariable(firefighter_recepients_Bcc), ShareVariable(security_recepients_To), ShareVariable(security_recepients_Cc), ShareVariable(security_recepients_Bcc), ShareVariable(kioskId), ShareVariable(serviceType));
+}

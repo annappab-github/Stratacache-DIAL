@@ -1,0 +1,110 @@
+<html>
+<title>CURRENT VISIBILITY</title>
+
+<SCRIPT LANGUAGE="JAVASCRIPT">
+function validate()
+{
+	function regex(string, regex) { return regex.exec(string);}
+
+	var errors = "";
+	var metar = document.forms.metar;
+
+	if (!regex(metar.REPORT.value, /(^MET$)|(^SPECIAL$)|(^ADDITIONAL$/))
+		errors += "REPORT must be METAR or SPECIAL or ADDITIONAL.\n";
+	if (!regex(metar.DDHHMM.value, /^[0-9]{6}$/))
+		errors += "DDHHMM must be like e.g. 120303 .\n";
+	if (!regex(metar.SURFACEWIND.value,/^[0-9A-Z\/\s]{0,10}$|^$/))
+		errors += "Invalid entry for Wind.\n";
+	if (!regex(metar.WINDRWY28.value,/^[0-9A-Z\/\s]{0,10}$|^$/))
+		errors += "Invalid entry for Wind.\n";
+	if (!regex(metar.WINDRWY10.value,/^[0-9A-Z\/\s]{0,10}$|^$/))
+		errors += "Invalid entry for Wind.\n";
+	if (!regex(metar.WINDRWY27.value,/^[0-9A-Z\/\s]{0,10}$|^$/))
+		errors += "Invalid entry for Wind.\n";
+	if (!regex(metar.WINDRWY29.value,/^[0-9A-Z\/\s]{0,10}$|^$/))
+		errors += "Invalid entry for Wind.\n";
+	if (!regex(metar.WINDRWY11.value,/^[0-9A-Z\/\s]{0,10}$|^$/))
+		errors += "Invalid entry for Wind.\n";
+	if (!regex(metar.VIS.value, /^[0-9A-Z\/\s]{0,24}$|^$/))
+		errors += "Invalid entry for Visibility.\n";
+	if (!regex(metar.WEATHER.value, /^[A-Z0-9\s]{0,15}$|^$/))
+		errors += "Invalid entry for Weather.\n";
+	if (!regex(metar.RVRRWY28.value, /^[0-9A-Z\s]{3,10}$|^$/))
+		errors += "Invalid entry for Runway Visible Range RVRRWY28.\n";
+	if (!regex(metar.RVR28MID.value, /^[0-9A-Z\s]{3,10}$|^$/))
+		errors += "Invalid entry for Runway Visible Range RVR28MID.\n";
+	if (!regex(metar.RVRRWY10.value, /^[0-9A-Z\s]{3,10}$|^$/))
+		errors += "Invalid entry for Runway Visible Range RVRRWY10.\n";
+	if (!regex(metar.RVRRWY27.value, /^[0-9A-Z\s]{3,10}$|^$/))
+		errors += "Invalid entry for Runway Visible Range RVRRWY27.\n";
+	if (!regex(metar.RVRRWY29.value, /^[0-9A-Z\s]{3,10}$|^$/))
+		errors += "Invalid entry for Runway Visible Range RVRRWY29.\n";
+	if (!regex(metar.RVRRWY29MID.value, /^[0-9A-Z\s]{3,10}$|^$/))
+		errors += "Invalid entry for Runway Visible Range RVRRWY29.\n";
+	if (!regex(metar.RVRRWY11.value, /^[0-9A-Z\s]{3,10}$|^$/))
+		errors += "Invalid entry for Runway Visible Range RVRRWY11.\n";
+	if (!regex(metar.CLOUD1.value, /^[A-Z0-9\/ \s]{0,32}$|^$/))
+		errors += "Invalid entry for Cloud Group 1.\n";
+	if (!regex(metar.CLOUD2.value, /^[A-Z0-9\/\s]{0,32}$|^$/))
+		errors += "Invalid entry for Cloud Group 2.\n";
+	if (!regex(metar.CLOUD3.value, /^[A-Z0-9\/\s]{0,32}$|^$/))
+		errors += "Invalid entry for Cloud Group 3.\n";
+	if (!regex(metar.CLOUD4.value, /^[A-Z0-9\/\s]{0,32}$|^$/))
+		errors += "Invalid entry for Cloud Group 4.\n";
+ 	if (!regex(metar.T.value, /^[0-9]{2}$/))
+		errors += "Invalid entry for Temperature.\n";
+	if (!regex(metar.QNH.value, /^[0-9]{3,5}$/))
+		errors += "Invalid entry for QNH.\n";
+ 	if (!regex(metar.INS1.value, /^[0-9]{3,5}$/))
+		errors += "Invalid entry for INS1.\n";
+ 	if (!regex(metar.QFE.value, /^[0-9]{3,5}$/))
+		errors += "Invalid entry for QFE.\n";
+ 	if (!regex(metar.INS2.value, /^[0-9]{3,5}$/))
+		errors += "Invalid entry for INS2.\n";
+	if (!regex(metar.DP.value, /^M?[0-9]{2}$/))
+		errors += "Invalid entry for Dewpoint Temperature.\n";
+	if (!regex(metar.TREND1.value, /^[A-Z0-9 \/\s]{0,32}$|^$/))
+		errors += "Invalid entry for Trend forecast.\n";
+	if (!regex(metar.TREND2.value, /^[A-Z0-9 \/\s]{0,32}$|^$/))
+		errors += "Invalid entry for Trend forecast.\n";
+	if (!regex(metar.WSWRNG1.value, /^[A-Z0-9 \/\s]{0,32}$|^$/))
+		errors += "Invalid entry for WSWRNG text.\n";
+//	if (!regex(metar.WSWRNG2.value, /^[A-Z0-9 \/\s]{0,32}$|^$/))
+//		errors += "Invalid entry for WSWRNG text.\n";
+	if (!regex(metar.HHMM.value, /^[0-2][0-9]:[0-5][0-9]$/))
+		errors += "TIME must be of format HH:MM.\n";
+	if (!regex(metar.DATE.value, /^[0-9]{2}\/[0-9]{2}\/[0-9]{2}$/))
+		errors += "Date must be of format DD/MM/YY.\n";
+	if (!regex(metar.SEQ.value, /^[A-Z]$|^$/))
+		errors += "An alphabet character has to be entered for SEQUENCE.\n";
+	if (!regex(metar.SIGNATURE.value, /^[A-Z0-9\s]{0,12}$|^$/))
+		errors += "An alphabet character has to be entered for SIGNATURE.\n";
+ 	if (errors != "")
+		errors += "(Tooltips are available by hovering the mouse over the respective input).\n";
+
+	return errors;
+}
+</script><center>
+<body><pre><font size="6" color="green" ><u><b>DELHI AIRPORT</b></u></font>
+<b><font size=5" color="blue">TEMPRATURE:   33 </font><font size="5" color="black">?C</font></b>
+<font size="5" color="red" ><b>CURRENT VISIBILITY
+AT I.G.I. AIRPORT</b></font><b><font color="blue" size="4"><u>
+DATE TIME(DDHHMM) :  130630 UTC
+( IST: TIME IN UTC + 0530 HRS )</font></u><font color="black" size="5">
+GEN. VIS.    : 4000 
+RVR RWY28    :  M
+RVR RWY28MID :  M
+RVR RWY10    :  M
+RVR RWY27    :  M
+RVR RWY29    :  M
+RVR RWY29MID :  M
+ RVR RWY11    :  M </font><font size="5" color="green">
+CURRENT WEATHER : HZ </b>
+<font size="5" color="#0055AA"><b>TREND FOR NEXT 2 HOURS:</b></font>
+<font color="#AA2B00" size="5"><b> NOSIG= </b></font></center></font><font size="3">
+<u><b>LEGENDS:</u><br>
+FG = FOG; MIFG = SHALLOW FOG; FU = SMOKE; HZ = HAZE;<br>BR = MIST; TSRA = THUNDER STORM WITH RAIN;<br>DZ = DRIZZLE; RA = RAIN;NOSIG = NO SIGNIFICANT CHANGE;<br>ABV = ABOVE; BECMG = BECOMING;</font></pre>
+
+<br>
+</body>
+</html>
